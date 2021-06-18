@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,9 +26,22 @@ public class HolaWebService {
         return student;
     }
 
+    @GetMapping("/list-students")
+    public List<StudentData> findAllStudents() {
+        List<StudentData> students = studentRepository.findAll();
+        return students;
+    }
+
     @GetMapping("/create-student")
-    public StudentData createStudent() {
-        StudentData student = new StudentData(null, "Paul Saltos", 45);
+    public StudentData createStudent(@RequestParam(value = "fullname") String fullname,
+                                     @RequestParam(value = "age", defaultValue = "25") Integer age) {
+        /*Integer age;
+        if (ageString == null && ageString.equals("")) {
+            age = 25;
+        } else {
+            age = Integer.valueOf(ageString);
+        }*/
+        StudentData student = new StudentData(null, fullname, age);
         studentRepository.save(student);
         return student;
     }
