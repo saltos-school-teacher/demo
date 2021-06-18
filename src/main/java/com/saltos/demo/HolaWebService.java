@@ -2,9 +2,11 @@ package com.saltos.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.Optional;
 
 @RestController
 public class HolaWebService {
@@ -18,8 +20,8 @@ public class HolaWebService {
     }
 
     @GetMapping("/student")
-    public StudentData findStudent() {
-        StudentData student = new StudentData(1, "Paul Saltos", 45);
+    public Optional<StudentData> findStudent(@RequestParam(value = "id") Integer studentId) {
+        Optional<StudentData> student = studentRepository.findById(studentId);
         return student;
     }
 
